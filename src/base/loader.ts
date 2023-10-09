@@ -18,7 +18,7 @@ export class Loader extends Group {
   constructor() {
     super()
     const dracoLoader = new DRACOLoader()
-    dracoLoader.setDecoderPath('assets/js/')
+    dracoLoader.setDecoderPath('js/')
     this.#loader.setDRACOLoader(dracoLoader)
   }
 

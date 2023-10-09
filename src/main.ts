@@ -8,8 +8,9 @@ import {
   PerspectiveCamera,
   AmbientLight,
 } from 'three'
-import {OldComputer} from './models'
+import {OldComputer,Ferrari} from './models'
 import './style.scss'
+import { Control } from './base/control'
 
 const scene = new Scene()
 const clock = new Clock()
@@ -32,13 +33,17 @@ controls.update()
 const directional = new DirectionalLight(0xffffff, 0.6)
 const ambient = new AmbientLight(0x404040)
 
+const control = new Control()
+control.initialize()
+
 /**
  * Model 👇
  */
-const oldComputer = new OldComputer()
-oldComputer.initialize()
+const ferrari = new Ferrari(control)
+ferrari.init()
 
-scene.add(camera, directional, ambient, oldComputer)
+scene.add(camera, directional, ambient, ferrari)
+// scene.add(camera, directional, ambient, oldComputer)
 
 /**
  * Game loop
@@ -48,6 +53,8 @@ const animate = () => {
 
   const delta = clock.getDelta()
 
+  control.update()
+  ferrari.update()
   controls.update(delta)
   stats.update()
 

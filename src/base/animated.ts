@@ -10,7 +10,7 @@ export abstract class Animated extends Model {
   async loadModel(path: string) {
     return this.load(path).then((gltf) => {
       this.mixer = new AnimationMixer(gltf.scene)
-
+      this.animations = gltf.animations
       for (const animation of this.animations) {
         this.actions.push(this.mixer.clipAction(animation))
       }

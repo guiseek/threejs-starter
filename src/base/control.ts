@@ -2,6 +2,8 @@ import {Quaternion} from 'three'
 import {isMobile} from '../utilities/is-mobile'
 import {quaternionFromOrientation} from '../utilities/quaternion-from-orientation'
 
+type Direction = 'n' | 'w' | 's' | 'e'
+
 export class Control {
   readonly key = {
     W: 0,
@@ -25,6 +27,8 @@ export class Control {
     East: 0,
     Some: 0,
   }
+
+  directions = new Set<Direction>()
 
   get #arrowKeys() {
     return [
@@ -82,26 +86,34 @@ export class Control {
   update() {
     if (this.key.W || this.key.Up) {
       this.direction.North = 1
+      this.directions.add('n')
     } else {
       this.direction.North = 0
+      this.directions.delete('n')
     }
 
     if (this.key.A || this.key.Left) {
       this.direction.West = 1
+      this.directions.add('w')
     } else {
       this.direction.West = 0
+      this.directions.delete('w')
     }
 
     if (this.key.S || this.key.Down) {
       this.direction.South = 1
+      this.directions.add('s')
     } else {
       this.direction.South = 0
+      this.directions.delete('s')
     }
 
     if (this.key.D || this.key.Right) {
       this.direction.East = 1
+      this.directions.add('e')
     } else {
       this.direction.East = 0
+      this.directions.delete('e')
     }
 
     if (Math.max(...this.#arrowKeys)) {
